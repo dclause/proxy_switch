@@ -64,6 +64,7 @@ set_proxy() {
     echo -e "   NPM proxy:           ${GREEN}on${NC}"
     # GIT proxy
     eval `git config --global http.proxy $PROXY`
+    eval `git config --global https.proxy $PROXY`
     echo -e "   GIT proxy:           ${GREEN}on${NC}"
 
     echo -e "${YELLOW} > All proxy settings are on${NC}"
@@ -89,7 +90,8 @@ unset_proxy() {
     eval `npm config delete https-proxy`
     echo -e "   NPM proxy:              ${RED}off${NC}"
     # GIT proxy
-    eval `git config --global --unset core.gitproxy`
+    eval `git config --global --unset http.proxy`
+    eval `git config --global --unset https.proxy`
     echo -e "   GIT proxy:              ${RED}off${NC}"
 
     echo -e "${YELLOW} > All proxy settings have been unset${NC}"
