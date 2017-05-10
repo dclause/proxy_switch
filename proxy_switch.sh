@@ -49,9 +49,11 @@ set_proxy() {
 
     # Global proxy
     eval `export http_proxy=$PROXY`
+    eval `export HTTP_PROXY=$PROXY`
     echo -e "   Global proxy:        ${GREEN}on${NC}"
     # Global https proxy
-    eval `unset HTTPS_PROXY`
+    eval `export https_proxy=$PROXYl`
+    eval `export HTTPS_PROXY=$PROXYl`
     echo -e "   Global HTTPS proxy:  ${GREEN}on${NC}"
     # NPM proxy
     eval `npm config set proxy $PROXY`
@@ -70,8 +72,10 @@ unset_proxy() {
 
     # Global proxy
     eval `unset http_proxy`
+    eval `unset HTTP_PROXY`
     echo -e "   Global proxy:           ${RED}off${NC}"
     # Global https proxy
+    eval `unset https_proxy`
     eval `unset HTTPS_PROXY`
     echo -e "   Global HTTPS proxy:     ${RED}off${NC}"
     # NPM proxy
