@@ -27,7 +27,7 @@ display_help() {
 # Display proxy settings  #
 ###########################
 display_proxy_settings() {
-    source ~/.proxy.conf
+    source $HOME/.proxy.conf
 
     echo "Proxy configurations are set in ~/.proxy.conf with current values:"
     echo -e "   User:     ${ORANGE}$USER${NC}"
@@ -41,9 +41,9 @@ display_proxy_settings() {
 # Set proxy method        #
 ###########################
 set_proxy() {
-    source ~/.proxy.conf
+    source $HOME/.proxy.conf
 
-    PROXY="http://$USER:$PASSWORD@$HOST:$PORT"
+    PROXY="http://$USER:$PASSWORD@$HOST:$PORT/"
     echo -e "From now on, you will use the following proxy settings: ${ORANGE}$PROXY${NC}"
     echo "  NOTE: Those proxy settings are sourced from ~/.proxy.conf"
 
@@ -66,6 +66,12 @@ set_proxy() {
     eval `git config --global http.proxy $PROXY`
     eval `git config --global https.proxy $PROXY`
     echo -e "   GIT proxy:           ${GREEN}on${NC}"
+    # cURL proxy
+    if [ ! -e "$HOME/.curlrc" ]; then
+		touch "$HOME/.curlrc"
+	fi
+    echo "proxy=$PROXY" >> $HOME/.curlrc
+    echo -e "   cURL proxy:          ${GREEN}on${NC}"
 
     echo -e "${YELLOW} > All proxy settings are on${NC}"
 }
@@ -93,6 +99,11 @@ unset_proxy() {
     eval `git config --global --unset http.proxy`
     eval `git config --global --unset https.proxy`
     echo -e "   GIT proxy:              ${RED}off${NC}"
+    # cURL proxy
+    if [ -e "$HOME/.curlrc" ]; then
+		sed -i "/proxy\=/d" $HOME/.curlrc
+	fi
+    echo -e "   cURL proxy:             ${RED}off${NC}"
 
     echo -e "${YELLOW} > All proxy settings have been unset${NC}"
 }

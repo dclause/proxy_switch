@@ -3,13 +3,13 @@ Switches proxy on/off accross your Linux environment and common dev tools.
 
 Currently switches:
 - Global http_proxy and https_proxy variables, impacting the following tools:
-  - cURL
   - composer
   - platform (from platformSH)
   - drush (Drupal tool)
   - any other tools using Linux global proxy config
 - GIT
 - NPM
+- cURL (via .curlrc)
 
 # Install
 - Download ``proxy_switch.sh``
